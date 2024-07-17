@@ -1,0 +1,123 @@
+{# @pebvariable name="model" type="application.web.models.ticketModels.PerformanceVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+    <div class="container-fluid d-flex justify-content-start m-2">
+      <div class="row align-self-start">
+        <div class="col-lg-12">
+          <a href="/performances/{{ model.performData.id }}" class="btn btn-primary"><-Вернуться</a>
+        </div>
+      </div>
+    </div>
+    {% if model.userRole == "theaterWorker" and model.userTheater == model.showData.theaterName%}
+        <div class="container-fluid d-flex justify-content-start m-2">
+          <div class="row align-self-start">
+            <div class="col-lg-12">
+              <a href="/performances/{{ model.performData.id }}/{{ model.showData.id }}/new" class="btn btn-primary">Добавить билет</a>
+            </div>
+          </div>
+        </div>
+    {% endif %}
+
+    <div class="container col-3 text-center">
+        <h1 class="card-title">Билеты на "{{model.performData.performName}}"</h1>
+        <p class="card-text">Дата: {{model.showData.date}}</p>
+        <p class="card-text">Продолжительность: {{model.performData.performTime}}мин</p>
+        <p class="card-text">Театр: {{model.showData.theaterName}}</p>
+        <p class="card-text">Зал: {{model.showData.hall}}</p>
+        <p class="card-text">Список актеров и их роли:</p>
+        <ul class="list-group list-group-flush">
+            {% for actor in model.performData.actors %}
+                <li class="list-group-item">{{actor.actorName}} - {{ actor.role }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="container col-4 mt-5 mb-5">
+        <h2>Фильтры</h2>
+        <form method="GET" action="">
+            <div class="form-group">
+               <label for="ticketStatus">Статус билета</label>
+               <select class="form-control" id="ticketStatus" name="ticketStatus">
+                 <option {% if (model.params["ticketStatus"] == "" or model.params["ticketStatus"] == "В продаже") %} selected {% endif %}>В продаже</option>
+                 <option {% if (model.params["ticketStatus"] == "Куплен") %} selected {% endif %}>Куплен</option>
+               </select>
+            </div>
+            <div class="form-group">
+              <label><h4>Зрительская зона:</h4></label>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="parter" name="parter" {% if(model.params["parter"] == "on") %}checked{% endif %}>
+                <label class="form-check-label" for="parter">Партер</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="balcony" name="balcony" {% if(model.params["balcony"] == "on") %}checked{% endif %}>
+                <label class="form-check-label" for="balcony">Балкон</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="amphitheater" name="amphitheater" {% if(model.params["amphitheter"] == "on") %}checked{% endif %}>
+                <label class="form-check-label" for="amphitheater">Амфитеатр</label>
+              </div>
+            </div>
+            <h4>Цена</h4>
+            <div class="form-group">
+                <label for="minPrice">От:</label>
+                <input type="number" class="form-control" id="minPrice" name="minPrice" value="{{ model.params["minPrice"]}}">
+            </div>
+            <div class="form-group">
+                <label for="maxPrice">До:</label>
+                <input type="number" class="form-control" id="maxPrice" name="maxPrice" value="{{ model.params["maxPrice"] }}">
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">Применить</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="row mb-4">
+            {% for ticket in model.ticketsPage.elements %}
+                <div class="col-4 mb-4">
+                    <div class="card">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">Билет</h5>
+                                <p class="card-text">{{model.showData.theaterName}}</p>
+                                <p class="card-text">Зрительская зона: {{ticket.visualArea}}</p>
+                                <p class="card-text">Ряд: {{ticket.rowNum}}</p>
+                                <p class="card-text">Место: {{ticket.placeNum}}</p>
+                                <p class="card-text">Цена: {{ ticket.price }}</p>
+                                <p class="card-text">Дата выпуска: {{ticket.ticketDate}}</p>
+                                {% if model.userRole == "viewer" %}
+                                    {% if (ticket.bought == true) %}
+                                        <a href="/performances/{{ model.showData.performId }}/{{ model.showData.id }}/buy?ticketId={{ ticket.id }}" class="btn btn-primary">Купить</a>
+                                    {% endif %}
+                                {% endif %}
+                                {% if model.userRole == "admin" or (model.userRole == "theaterWorker" and model.userTheater == model.showData.theaterName)%}
+                                        <a href="/performances/{{ model.showData.performId }}/{{ model.showData.id }}/edit?ticketId={{ ticket.id }}" class="btn btn-primary">Редактировать</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="bottom bg-light p-3">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="?page={{ max(model.ticketsPage.curPage-1, 1) }}&parter={{ model.params["parter"] }}&balcony={{ model.params["balcony"] }}&amphitheater={{ model.params["amphitheater"] }}&minPrice={{ model.params["minPrice"] }}&maxPrice={{ model.params["maxPrice"] }}&ticketStatus={{ model.params["ticketStatus"] }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% for i in max(model.ticketsPage.curPage-2, 1)..min(model.ticketsPage.curPage+2, model.ticketsPage.totalPages)%}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}&parter={{ model.params["parter"] }}&balcony={{ model.params["balcony"] }}&amphitheater={{ model.params["amphitheater"] }}&minPrice={{ model.params["minPrice"] }}&maxPrice={{ model.params["maxPrice"] }}&ticketStatus={{ model.params["ticketStatus"] }}">{{ i }}</a></li>
+          {% endfor %}
+            <a class="page-link" href="?page={{ min(model.ticketsPage.curPage+1, model.ticketsPage.totalPages) }}&parter={{ model.params["parter"] }}&balcony={{ model.params["balcony"] }}&amphitheater={{ model.params["amphitheater"] }}&minPrice={{ model.params["minPrice"] }}&maxPrice={{ model.params["maxPrice"] }}&ticketStatus={{ model.params["ticketStatus"] }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+{% endblock %}

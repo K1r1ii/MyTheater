@@ -1,0 +1,18 @@
+{# @pebvariable name="model" type="application.web.models.HomeVM" #}
+
+{% extends "./layout.peb" %}
+{% block content %}
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1>Театральная касса</h1>
+        <h2>О нас</h2>
+        <p>
+            Это приложение представляет собой удобную онлайн кассу,
+            объединяющую в себе множество театров и спектаклей!
+            В разделе Спектакли вы можете выбрать понравившийся вам спектакль и ознакомиться со списком билетов в ним.
+        </p>
+        <p>Время создания {{ model.time | date("yyyy-MM-dd HH:mm") }}</p>
+        <div class="col-md-4 offset-md-4">
+            <a href="performances" class="card btn btn-primary" role="button">Смотреть Спектакли!</a>
+        </div>
+    </div>
+{% endblock %}

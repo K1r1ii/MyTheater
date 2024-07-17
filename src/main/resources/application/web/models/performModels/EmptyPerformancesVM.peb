@@ -1,0 +1,36 @@
+{# @pebvariable name="model" type="application.web.models.performModels.EmptyPerformancesVM" #}
+{% extends "../layout.peb" %}
+{% block content %}
+    <div class="container-fluid d-flex justify-content-start m-2">
+      <div class="row align-self-start">
+        <div class="col-lg-12">
+          <a href="/performances/new" class="btn btn-primary">Добавить спектакль</a>
+        </div>
+      </div>
+    </div>
+    <h1>Спектакли</h1>
+    <div class="container col-3 mb-5">
+        <form  action="" method="get">
+          <h4>Продолжительность спектакля</h4>
+          <div class="mb-3">
+            <label for="minTime" class="form-label">От</label>
+            <input type="number" class="form-control" id="minTime" name="minTime" value="{{ model.params["minTime"] }}">
+          </div>
+          <div class="mb-3">
+            <label for="maxTime" class="form-label">До</label>
+            <input type="number" class="form-control" id="maxTime" name="maxTime" value="{{ model.params["maxTime"] }}">
+          </div>
+          <h4>Дата спектакля</h4>
+          <div class="mb-3">
+            <label for="firstDate" class="form-label">От</label>
+            <input max="9999-12-31" type="date" class="form-control" id="firstDate" name="firstDate" value="{{ model.params["firstDate"] }}">
+          </div>
+          <div class="mb-3">
+            <label for="secondDate" class="form-label">До</label>
+            <input max="9999-12-31" type="date" class="form-control" id="secondDate" name="secondDate" value="{{ model.params["secondDate"] }}">
+          </div>
+          <button type="submit" class="btn btn-primary">Применить</button>
+        </form>
+    </div>
+    <h2>Нет подходящих спектаклей</h2>
+{% endblock %}

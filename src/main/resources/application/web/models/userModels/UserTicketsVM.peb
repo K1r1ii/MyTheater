@@ -1,0 +1,46 @@
+{# @pebvariable name="model" type="application.web.models.userModels.UserTicketsVM" #}
+    {% extends "../layout.peb" %}
+{% block content %}
+{# список билетов #}
+    <div class="container">
+        <div class="row mb-4">
+            {% for ticket in model.userTicketsPage.elements %}
+                <div class="col-4 mb-4">
+                    <div class="card">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">Билет</h5>
+                                <p class="card-text">{{ticket.theaterName}}</p>
+                                <p class="card-text">Зрительская зона: {{ticket.visualArea}}</p>
+                                <p class="card-text">Ряд: {{ticket.rowNum}}</p>
+                                <p class="card-text">Место: {{ticket.placeNum}}</p>
+                                <p class="card-text">Цена: {{ ticket.price }}</p>
+                                <p class="card-text">Дата выпуска: {{ticket.ticketDate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{# переключение страниц #}
+    <div class="bottom bg-light p-3">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="?page={{ max(model.userTicketsPage.curPage-1, 1) }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% for i in max(model.userTicketsPage.curPage-2, 1)..min(model.userTicketsPage.curPage+2, model.userTicketsPage.totalPages)%}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endfor %}
+            <a class="page-link" href="?page={{ min(model.userTicketsPage.curPage+1, model.userTicketsPage.totalPages) }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+{% endblock %}

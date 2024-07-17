@@ -1,0 +1,30 @@
+{# @pebvariable name="model" type="application.web.models.userModels.NewUserVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Редактирование пользователя {{ model.dataForm["login"] }}</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="login">Логин:</label>
+        <input type="text" class="form-control" id="login" name="login" value="{{ model.dataForm["login"] }}">
+        <div class="text-danger small my-0">{{ model.errors["login"] }}</div>
+      </div>
+      <div class="form-group">
+        <label for="role">Роль пользователя</label>
+        <select class="form-control" id="role" name="role">
+          <option value="viewer" {% if model.dataForm["role"] == "viewer"%}selected{% endif %}>Зритель</option>
+          <option value="theaterWorker" {% if model.dataForm["role"] == "theaterWorker"%}selected{% endif %}>Работник театра</option>
+          <option value="admin" {% if model.dataForm["role"] == "admin"%}selected{% endif %}>Администратор</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="login">Название театра(только для работников театра):</label>
+        <input type="text" class="form-control" id="theater" name="theater" value="{{ model.dataForm["theater"] }}">
+        <div class="text-danger small my-0">{{ model.errors["theater"] }}</div>
+      </div>
+      <button type="submit" class="btn btn-primary mb-3 mt-3">Сохранить</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

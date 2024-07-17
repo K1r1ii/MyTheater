@@ -1,0 +1,7 @@
+{# @pebvariable name="model" type="application.web.models.errorsModels.PageNotFoundVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+    <h1>Страница не найдена</h1>
+    <p>Ошибка: {{ model.errorMessage }}</p>
+{% endblock %}

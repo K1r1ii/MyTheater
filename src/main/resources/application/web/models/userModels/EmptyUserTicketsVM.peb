@@ -1,0 +1,16 @@
+{# @pebvariable name="model" type="application.web.models.userModels.EmptyUserTicketsVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+{#    <div class="container-fluid d-flex justify-content-start m-2">#}
+{#      <div class="row align-self-start">#}
+{#        <div class="col-lg-12">#}
+{#          <a href="/performances" class="btn btn-primary">Купить билет</a>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <h1>Ваши билеты</h1>
+    <h2>Вы пока не купили ни одного билета</h2>
+    <a href="/performances" class="btn btn-primary">Купить билет</a>
+
+{% endblock %}

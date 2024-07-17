@@ -1,0 +1,8 @@
+{# @pebvariable name="model" type="application.web.models.errorsModels.PageBadRequestVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+    <h1>Некорректные данные</h1>
+    <p>Что-то пошло не так, проверьте отправляемые данные и попробуйте еще раз</p>
+    <p>Ошибка: {{ model.errorMessage }}</p>
+{% endblock %}

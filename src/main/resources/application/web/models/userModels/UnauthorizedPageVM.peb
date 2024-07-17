@@ -1,0 +1,7 @@
+{# @pebvariable name="model" type="application.web.models.userModels.UnauthorizedPageVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+    <h1>У вас не достаточно прав для данной операции</h1>
+    <p>Обратитесь к администратору сайта</p>
+{% endblock %}

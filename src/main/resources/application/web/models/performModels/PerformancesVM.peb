@@ -1,0 +1,77 @@
+{# @pebvariable name="model" type="application.web.models.performModels.PerformancesVM" #}
+
+{% extends "../layout.peb" %}
+{% block content %}
+    <div class="container-fluid d-flex justify-content-start m-2">
+      <div class="row align-self-start">
+        <div class="col-lg-12">
+          <a href="/performances/new" class="btn btn-primary">Добавить спектакль</a>
+        </div>
+      </div>
+    </div>
+    <h1>Спектакли</h1>
+    <div class="container col-3 mb-5">
+        <form  action="" method="get">
+          <h4>Продолжительность спектакля</h4>
+          <div class="mb-3">
+            <label for="minTime" class="form-label">От</label>
+            <input type="number" class="form-control" id="minTime" name="minTime" value="{{ model.params["minTime"] }}">
+          </div>
+          <div class="mb-3">
+            <label for="maxTime" class="form-label">До</label>
+            <input type="number" class="form-control" id="maxTime" name="maxTime" value="{{ model.params["maxTime"]}}">
+          </div>
+          <h4>Дата спектакля</h4>
+          <div class="mb-3">
+            <label for="firstDate" class="form-label">От</label>
+            <input max="9999-12-31" type="date" class="form-control" id="firstDate" name="firstDate" value="{{ model.params["firstDate"] }}">
+          </div>
+          <div class="mb-3">
+            <label for="secondDate" class="form-label">До</label>
+            <input max="9999-12-31" type="date" class="form-control" id="secondDate" name="secondDate" value="{{ model.params["secondDate"] }}">
+          </div>
+          <button type="submit" class="btn btn-primary">Применить</button>
+        </form>
+    </div>
+
+    <div class="container col text-center">
+        <div class="row mb-4">
+            {% for perform in model.performsPage.elements %}
+                <div class="col-4 mb-5">
+                    <div class="card-body">
+                        <a href="/performances/{{ perform.id }}" class="card btn btn-primary">
+                            <h5 class="card-title">{{ perform.performName }}</h5>
+                            <p class="card-text">{{perform.performPremDate}}</p>
+                        </a>
+                        {% if model.userRole == "admin" or model.userRole == "theaterWorker"%}
+                            <a href="/performances/edit?performId={{ perform.id }}" class="card btn btn-primary">Редактировать</a>
+                            <a href="/performances/delete?performId={{ perform.id }}" class="card btn btn-primary">Удалить</a>
+                        {% endif %}
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="bg-light p-3">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="?page={{ max(model.performsPage.curPage-1, 1) }}&minTime={{ model.params["minTime"] }}&maxTime={{ model.params["maxTime"]}}&firstDate={{model.params["firstDate"]}}&secondDate={{model.params["secondDate"]}}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {% for i in max(model.performsPage.curPage-2, 1)..min(model.performsPage.curPage+2, model.performsPage.totalPages)%}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}&minTime={{ model.params["minTime"] }}&maxTime={{ model.params["maxTime"]}}&firstDate={{model.params["firstDate"]}}&secondDate={{model.params["secondDate"]}}">{{ i }}</a></li>
+              {% endfor %}
+                <a class="page-link" href="?page={{ min(model.performsPage.curPage+1, model.performsPage.totalPages) }}&minTime={{ model.params["minTime"] }}&maxTime={{ model.params["maxTime"]}}&firstDate={{model.params["firstDate"]}}&secondDate={{model.params["secondDate"]}}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+{% endblock %}

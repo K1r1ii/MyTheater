@@ -1,0 +1,22 @@
+{# @pebvariable name="model" type="application.web.models.userModels.SignInVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Вход</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="login">Логин</label>
+        <input type="text" class="form-control" id="login" name="login" value="{{ model.dataForm["login"] }}">
+        <div class="text-danger small my-0">{{ model.errors["login"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="password">Пароль</label>
+        <input type="password" class="form-control" id="password" name="password" value="{{ model.dataForm["password"] }}">
+        <div class="text-danger small my-0">{{ model.errors["password"] }}</div>
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Войти</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

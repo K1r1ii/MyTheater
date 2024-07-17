@@ -1,0 +1,29 @@
+{# @pebvariable name="model" type="application.web.models.showModels.ConfirmDeleteShowVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Подтверждение удаления</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="theaterName">Название театра:</label>
+        <input type="text" class="form-control" id="theaterName" name="theaterName" value="{{ model.dataForm["theaterName"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["theaterName"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="hallName">Зал:</label>
+        <input type="text" class="form-control" id="hallName" name="hallName" value="{{ model.dataForm["hallName"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["hallName"] }}</div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="date">Дата показа:</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ model.dataForm["date"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["date"] }}</div>
+      </div>
+      <h4>Внимание! Все данные, связанные с этим показом, так же будут удалены!</h4>
+      <button type="submit" class="btn btn-primary mb-3">Удалить</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

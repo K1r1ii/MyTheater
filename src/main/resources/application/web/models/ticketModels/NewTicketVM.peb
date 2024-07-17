@@ -1,0 +1,43 @@
+{# @pebvariable name="model" type="application.web.models.ticketModels.NewTicketVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Добавление/редактирование билета</h2>
+    <form action="" method="POST">
+      <div class="form-group">
+        <label for="visualArea">Зрительская зона</label>
+        <select class="form-control" id="visualArea" name="visualArea">
+          <option>Партер</option>
+          <option>Балкон</option>
+          <option>Амфитеатр</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="rowNum">Номер ряда:</label>
+        <input type="number" class="form-control" id="rowNum" name="rowNum" value="{{ model.dataForm["rowNum"] }}">
+        <div class="text-danger small my-0">{{ model.errors["rowNum"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="placeNum">Номер места:</label>
+        <input type="number" class="form-control" id="placeNum" name="placeNum" value="{{ model.dataForm["placeNum"] }}">
+        <div class="text-danger small my-0">{{ model.errors["placeNum"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="price">Цена:</label>
+        <input type="number" class="form-control" id="price" name="price" value="{{ model.dataForm["price"] }}">
+        <div class="text-danger small my-0">{{ model.errors["price"] }}</div>
+      </div>
+      <div class="form-group">
+         <label for="visualArea">Статус билета</label>
+         <select class="form-control" id="ticketStatus" name="ticketStatus">
+            <option {% if (model.dataForm["ticketStatus"] == "" or model.dataForm["ticketStatus"] == "В продаже")%}selected{% endif %}>В продаже</option>
+            <option {% if (model.dataForm["ticketStatus"] == "Куплен")%}selected{% endif %}>Куплен</option>
+         </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary mb-3 mt-4">Сохранить</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

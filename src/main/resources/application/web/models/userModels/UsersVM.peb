@@ -1,0 +1,50 @@
+{# @pebvariable name="model" type="application.web.models.userModels.UsersVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+    <div class="container-fluid d-flex justify-content-start m-2">
+      <div class="row align-self-start">
+        <div class="col-lg-12">
+          <a href="/signUp" class="btn btn-primary">Добавить пользователя</a>
+        </div>
+      </div>
+    </div>
+    <h1>Список пользоватлей</h1>
+    <div class="container col text-center">
+        <div class="row mb-4">
+            {% for user in model.usersPage.elements %}
+                <div class="col-4 mb-4">
+                    <div class="card-body">
+                        <div class="card mb-3">
+                                <h5 class="card-title">{{ user.login }}</h5>
+                                <h5>{{ user.permission }}</h5>
+                        </div>
+                        <a href="/users/edit?login={{ user.login }}" class="card btn btn-primary">Редактировать</a>
+                        <a href="/users/delete?login={{ user.login }}" class="card btn btn-primary">Удалить</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="bg-light p-3">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="?page={{ max(model.usersPage.curPage-1, 1) }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {% for i in max(model.usersPage.curPage-2, 1)..min(model.usersPage.curPage+2, model.usersPage.totalPages)%}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+              {% endfor %}
+                <a class="page-link" href="?page={{ min(model.usersPage.curPage+1, model.usersPage.totalPages) }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+
+{% endblock %}

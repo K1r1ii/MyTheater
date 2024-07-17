@@ -1,0 +1,33 @@
+{# @pebvariable name="model" type="application.web.models.performModels.ConfirmDeletePerformsVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Подтверждение удаления</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="performName">Название спектакля:</label>
+        <input type="text" class="form-control" id="performName" name="performName" value="{{ model.dataForm["performName"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["performName"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="performTime">Продолжительность (мин):</label>
+        <input type="number" class="form-control" id="performTime" name="performTime" value="{{ model.dataForm["performTime"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["performTime"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="performPremDate">Дата премьеры:</label>
+        <input type="date" class="form-control" id="performPremDate" name="performPremDate" value="{{ model.dataForm["performPremDate"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["performPremDate"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="actors">Список актеров и их роли:</label>
+        <textarea class="form-control" id="actors" name="actors" rows="3" readonly>{{ model.dataForm["actors"] }}</textarea>
+        <div class="text-danger small my-0">{{ model.errors["actors"] }}</div>
+      </div>
+      <h4>Внимание! Все данные, связанные с этим спектаклем, так же будут удалены!</h4>
+      <button type="submit" class="btn btn-primary mb-3">Удалить</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

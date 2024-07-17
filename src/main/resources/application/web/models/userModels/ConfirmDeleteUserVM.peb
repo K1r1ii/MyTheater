@@ -1,0 +1,22 @@
+{# @pebvariable name="model" type="application.web.models.userModels.ConfirmDeleteUserVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Удаление пользователя {{ model.dataForm["login"] }}</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="login">Логин:</label>
+        <input type="text" class="form-control" id="login" name="login" value="{{ model.dataForm["login"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["login"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="role">Роль:</label>
+        <input type="text" class="form-control" id="role" name="role" value="{{ model.dataForm["role"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["role"] }}</div>
+      </div>
+      <button type="submit" class="btn btn-primary mb-3 mt-3">Удалить</button>
+    </form>
+    <a href="./" class="btn btn-primary">Отмена</a>
+  </div>
+{% endblock %}

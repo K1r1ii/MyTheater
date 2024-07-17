@@ -1,0 +1,33 @@
+{# @pebvariable name="model" type="application.web.models.ticketModels.ConfirmBuyTicketVM" #}
+
+    {% extends "../layout.peb" %}
+{% block content %}
+  <div class="container col-3">
+    <h2>Покупка билета</h2>
+    <form action="" method="POST">
+      <div class="form-group mb-3">
+        <label for="visualArea">Зрительская зона:</label>
+        <input type="text" class="form-control" id="visualArea" name="visualArea" value="{{ model.dataForm["visualArea"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["visualArea"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="rowNum">Номер ряда:</label>
+        <input type="number" class="form-control" id="rowNum" name="rowNum" value="{{ model.dataForm["rowNum"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["rowNum"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="placeNum">Номер места:</label>
+        <input type="number" class="form-control" id="placeNum" name="placeNum" value="{{ model.dataForm["placeNum"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["placeNum"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+        <label for="price">Цена:</label>
+        <input type="number" class="form-control" id="price" name="price" value="{{ model.dataForm["price"] }}" readonly>
+        <div class="text-danger small my-0">{{ model.errors["price"] }}</div>
+      </div>
+      <div class="form-group mb-3">
+      <button type="submit" class="btn btn-primary mb-3">Купить</button>
+    </form>
+  </div>
+  <a href="./" class="btn btn-primary">Отмена</a>
+{% endblock %}
